@@ -23,7 +23,7 @@ def backup_dell_switch(ip, username, password, enable_secret, path):
     connection = ConnectHandler(**device)
     connection.enable()
 
-    hostname = connection.send_command("show running-configuration | grep hostname")
+    hostname = connection.send_command_timing('show running-configuration | grep hostname', read_timeout=5)
     hostname = hostname.strip().split()[-1]
 
     backup_time = datetime.datetime.now().strftime("%Y%m%d%H%M")
